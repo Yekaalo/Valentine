@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #fce4ec;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    padding: 20px;
+}
+
+.valentine-gif {
+    width: 260px;
+    height: auto;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+h1 {
+    color: #d81b60;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#yesBtn {
+    background-color: #4caf50;
+    color: white;
+}
+
+#noBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+    background-color: #45a049;
+}
+
+.hidden {
+    display: none;
+}
+
+.celebration-text {
+    color: #d81b60;
+    font-size: 3rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+</style>
+</head>
+
+<body>
+
+<div id="question-section" class="container">
+    <img id="mainGif" class="valentine-gif"
+         src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+         alt="Cute Kitty">
+
+    <h1>Will you be my Valentine Pookieee? ♡</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+</div>
+
+<div id="success-section" class="container hidden">
+    <img class="valentine-gif"
+         src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+         alt="Happy Kitty">
+
+    <h1 class="celebration-text">Yay! I love you mi Pookie Wookieee! ❤️</h1>
+</div>
+
+<script>
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const gif = document.getElementById('mainGif');
+const questionSection = document.getElementById('question-section');
+const successSection = document.getElementById('success-section');
+
+let noCount = 0;
+let scale = 1;
+
+// 🐱 All working kitty GIFs
+const kittyGifs = [
+    "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+    "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",
+    "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+    "https://media.giphy.com/media/8YutMatqkTfSE/giphy.gif",
+    "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+];
+
+const noMessages = [
+  "No",
+  "Are you sure Pokitoooo?",
+  "Pookie please endeeee...",
+  "Don't do this to me kittyyy :(",
+  "You're breaking my heart, meow",
+  "I'm gonna cry so so saddd...",
+  "PRETTY PLEASE ANCHIII",
+  "Okay now you're just being mean",
+  "I'll give you chocolate hehehe!",
+  "Change your mind?",
+  "Just click YES already!"
+];
+
+noBtn.addEventListener('click', () => {
+    noCount++;
+
+    // Change text
+    if (noCount < noMessages.length) {
+        noBtn.innerText = noMessages[noCount];
+    } else {
+        noBtn.innerText = "Please? :(";
+    }
+
+    // Grow Yes
+    scale += 0.2;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    // Change to next kitty gif
+    gif.style.opacity = 0;
+    setTimeout(() => {
+        gif.src = kittyGifs[noCount % kittyGifs.length];
+        gif.style.opacity = 1;
+    }, 150);
+
+    if (scale > 3) {
+        noBtn.style.display = "none";
+    }
+});
+
+yesBtn.addEventListener('click', () => {
+    questionSection.classList.add('hidden');
+    successSection.classList.remove('hidden');
+});
+</script>
+
+</body>
+</html>
